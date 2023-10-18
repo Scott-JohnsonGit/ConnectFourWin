@@ -1,0 +1,14 @@
+﻿<Window x:Class="ConnectFourWin.LoginWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConnectFourWin"
+        mc:Ignorable="d"
+        Title="Sign in" Height="450" Width="400" ResizeMode="NoResize" Closing="Window_Closed">
+    <Grid>
+        <Label Content="Provide a Username" FontSize="30" HorizontalContentAlignment="Center" Margin="46,156,46,191"/>
+        <Label Name="UserIdentifier" Content="User number " FontSize="40" Margin="16,17,16,333"/>
+        <TextBox Name="UsernameBox" TextWrapping="NoWrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" Text="Guest" Margin="69,248,69,129" BorderBrush="Black" KeyDown="UsernameBox_KeyDown"/>
+    </Grid>
+</Window>

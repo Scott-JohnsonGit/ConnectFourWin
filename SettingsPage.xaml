@@ -1,0 +1,35 @@
+﻿<Window x:Class="ConnectFourWin.SettingsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConnectFourWin"
+        mc:Ignorable="d"
+        Title="SettingsPage" ResizeMode="NoResize" Height="300" Width="400">
+    <Grid>
+        <Grid Margin="56,58,56,43">
+            <StackPanel Margin="0,0,0,78">
+                <Label Content="Choose a game setting" Height="30"/>
+                <Grid Name="GameModeGrid" Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Normal" Grid.Column="0" Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="XL Board" Grid.Column="2" Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="Double turn" Grid.Column="3" Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="Extra Player" Grid.Column="1" Height="30" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <RadioButton Name="NormalMode" IsChecked="True"  Grid.Column="0" VerticalAlignment="Bottom" Height="30" HorizontalAlignment="Center" Checked="GameModeChecked"/>
+                    <RadioButton Name="LargeBoardMode" Grid.Column="2" VerticalAlignment="Bottom" Height="30" HorizontalAlignment="Center" Checked="GameModeChecked"/>
+                    <RadioButton Name="DoubleTurnMode" Grid.Column="3" VerticalAlignment="Bottom" Height="30" HorizontalAlignment="Center" Checked="GameModeChecked"/>
+                    <RadioButton Name="ExtraPlayerMode" Grid.Column="1" VerticalAlignment="Bottom" Height="30" HorizontalAlignment="Center" Checked="GameModeChecked"/>
+                </Grid>
+
+            </StackPanel>
+            <Button Name="DoneButton" Content="Done" FontSize="30" Grid.Row="1" Height="50" VerticalAlignment="Bottom" Click="DoneButton_Click"/>
+        </Grid>
+
+    </Grid>
+</Window>
