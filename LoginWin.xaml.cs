@@ -22,7 +22,7 @@ namespace ConnectFourWin
         /// <summary>
         /// User submitted username
         /// </summary>
-        public string Username;
+        public string Username = "Guest";
         /// <summary>
         /// Create window and select text in username box
         /// </summary>

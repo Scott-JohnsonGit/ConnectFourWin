@@ -214,7 +214,7 @@ namespace ConnectFourWin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void HighlightNextPiece(object sender, MouseEventArgs e)
+        public void HighlightNextPiece(object sender, MouseEventArgs? e)
         {
             // Get column from hovered piece
             GameVisualPieces hoveringPiece = sender as GameVisualPieces;

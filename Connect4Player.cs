@@ -145,7 +145,8 @@ namespace Connect4
                 }
             }
             // Open connection
-            using (SQLiteConnection conn = new SQLiteConnection($"Data Source={_directory}{_dbName}"))
+            using (
+                SQLiteConnection conn = new SQLiteConnection($"Data Source={_directory}{_dbName}"))
             {
                 conn.Open();
                 // Checks if database has table named Accounts
