@@ -5,7 +5,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite;
 
 namespace Connect4
 {
@@ -29,7 +28,7 @@ namespace Connect4
         /// <summary>
         /// Number player this instance is associated with
         /// </summary>
-        public PlayerNum PlayerNum { get { return _playerNum; } }
+        public PlayerNum Playernum { get { return _playerNum; } }
         /// <summary>
         /// Number player this instance is associated with
         /// </summary>
@@ -56,7 +55,7 @@ namespace Connect4
         /// <param name="player">Player associated with instance</param>
         /// <param name="username">Username for leaderboard account</param>
         public Connect4Player(PlayerNum player, string username)
-            :this(player, username, Directory.GetCurrentDirectory() + @"\\ConnectFourData")
+            : this(player, username, Directory.GetCurrentDirectory() + @"\\ConnectFourData")
         {
             // Uses current directory of running application
         }
@@ -71,138 +70,17 @@ namespace Connect4
             _directory = path;
             Path = @$"{_directory}\\{_dbName}";
             _playerNum = player;
-            GetData();
-            if (!PlayerAccount(username))
-            {
-                _currentAccount = "Guest";
-            }
         }
+        
         /// <summary>
-        /// Gets or creates an account for leaderboard scores
+        /// Enum associated with players turns
         /// </summary>
-        /// <param name="username">username inputed</param>
-        /// <returns>Existing account found</returns>
-        /// <exception cref="Exception">Inablity to create new account</exception>
-        public bool PlayerAccount(string? username)
+        public enum PlayerNum
         {
-            // Makes player a guest user
-            if (username == "@Guest%" || username == null)
-            {
-                return false;
-            }
-            // Connects to database
-            using (SQLiteConnection conn = new SQLiteConnection($"Data Source={_directory}{_dbName}"))
-            {
-                _currentAccount = username;
-                conn.Open();
-                // Signs in and gets all data for player wins
-                using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Accounts", conn))
-                {
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            if (username == reader.GetString(1))
-                            {
-                                _gameWins = (ushort)reader.GetInt32(2);
-                                conn.Close();
-                                return true;
-                            }
-                        }
-                    }
-                }
-                // Creates new account with that username if doesnt already exist
-                using (SQLiteCommand cmd = new SQLiteCommand("INSERT INTO Accounts (AccountNames, WinAmount) VALUES (@AccountNames, @WinAmount)", conn))
-                {
-                    cmd.Parameters.AddWithValue("@AccountNames", username);
-                    cmd.Parameters.AddWithValue("@WinAmount", 0);
-                    // If no rows were updated (no account was created)
-                    if (cmd.ExecuteNonQuery() < 1)
-                    {
-                        throw new Exception("Command Failed");
-                    }
-                }
-                conn.Close();
-            }
-            return true;
+            None = 0,
+            One = 1,
+            Two = 2,
+            Extra = 3
         }
-        /// <summary>
-        /// Connects or creates database
-        /// </summary>
-        /// <exception cref="Exception">Failure to create file directory</exception>
-        private void GetData()
-        {
-            // Create directory if doesnt exist
-            if (!Directory.Exists(_directory))
-            {
-                try
-                {
-                    Directory.CreateDirectory(_directory);
-                }
-                catch 
-                {
-                    throw new Exception("Directory failed");
-                }
-            }
-            // Open connection
-            using (
-                SQLiteConnection conn = new SQLiteConnection($"Data Source={_directory}{_dbName}"))
-            {
-                conn.Open();
-                // Checks if database has table named Accounts
-                try
-                {
-                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT * FROM Accounts", conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                // Creates new table named Accounts if didnt exist
-                catch (Exception ex)
-                {
-                    using (SQLiteCommand cmd = new SQLiteCommand("CREATE TABLE Accounts (ID INTEGER PRIMARY KEY AUTOINCREMENT, AccountNames TEXT, WinAmount INTEGER)", conn))
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                conn.Close();
-            }
-        }
-        /// <summary>
-        /// Updates players stats after each winning game
-        /// </summary>
-        /// <param name="winAmount">The new value of the players wins</param>
-        /// <exception cref="Exception">Failed to update data</exception>
-        public void UpdateData(int winAmount)
-        {
-            _gameWins++;
-            if (_currentAccount != "Guest")
-            {
-                using (SQLiteConnection conn = new SQLiteConnection($"Data Source={_directory}{_dbName}"))
-                {
-                    conn.Open();
-                    using (SQLiteCommand cmd = new SQLiteCommand("UPDATE Accounts SET WinAmount = @Wins WHERE AccountNames = @Account", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Wins", winAmount);
-                        cmd.Parameters.AddWithValue("@Account", _currentAccount);
-                        if (cmd.ExecuteNonQuery() < 1)
-                        {
-                            throw new Exception("Error sending data");
-                        }
-                    }
-                    conn.Close();
-                }
-            }
-        }
-    }
-    /// <summary>
-    /// Enum associated with players turns
-    /// </summary>
-    public enum PlayerNum
-    {
-        None = 0,
-        One = 1,
-        Two = 2,
-        Extra = 3
     }
 }

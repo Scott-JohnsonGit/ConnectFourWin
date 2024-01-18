@@ -190,12 +190,12 @@ namespace Connect4
         /// </summary>
         /// <param name="player">Winning player number</param>
         /// <returns>True if a player has won the game, else false</returns>
-        public bool CheckWin(out PlayerNum player, out WinType winType)
+        public bool CheckWin(out Connect4Player.PlayerNum player, out WinType winType)
         {
             // checks each player seperately
             for (ushort i = 0; i < _currentPlayers.Count; i++)
             {
-                player = (PlayerNum)(i + 1);
+                player = (Connect4Player.PlayerNum)(i + 1);
                 if (HorizontalW(player, out WinType type))
                 {
                     winType = type;
@@ -213,13 +213,13 @@ namespace Connect4
                 }
                 else if (Draw(out WinType DrawType))
                 {
-                    player = PlayerNum.None;
+                    player = Connect4Player.PlayerNum.None;
                     winType = WinType.Draw;
                     return true;
                 }
             }
             // no player has won
-            player = PlayerNum.None;
+            player = Connect4Player.PlayerNum.None;
             winType = WinType.None;
             return false;
         }
@@ -228,7 +228,7 @@ namespace Connect4
         /// </summary>
         /// <param name="player">current player being checked</param>
         /// <returns>True if player has won</returns>
-        private bool HorizontalW(PlayerNum player, out WinType type)
+        private bool HorizontalW(Connect4Player.PlayerNum player, out WinType type)
         {
             for (int y = 0; y < _board.GetLength(0); y++)
             {
@@ -260,7 +260,7 @@ namespace Connect4
         /// </summary>
         /// <param name="player">Current player being checked</param>
         /// <returns>True if player has won</returns>
-        private bool VerticalW(PlayerNum player, out WinType type)
+        private bool VerticalW(Connect4Player.PlayerNum player, out WinType type)
         {
             for (int x = 0; x < _board.GetLength(1); x++)
             {
@@ -293,7 +293,7 @@ namespace Connect4
         /// <param name="player">Current player being checked</param>
         /// <param name="type">Type of win if won</param>
         /// <returns>If a win was detected</returns>
-        private bool DiagonalW(PlayerNum player, out WinType type)
+        private bool DiagonalW(Connect4Player.PlayerNum player, out WinType type)
         {
             return (DiagonalL(player, out type) || DiagonalR(player, out type));
         }
@@ -303,7 +303,7 @@ namespace Connect4
         /// <param name="player">Current player being checked</param>
         /// <param name="type">Type of win if won</param>
         /// <returns>If a win was detected</returns>
-        private bool DiagonalL(PlayerNum player, out WinType type)
+        private bool DiagonalL(Connect4Player.PlayerNum player, out WinType type)
         {
             for (int x = _board.GetLength(1) - 1; x > 3; x--)
             {
@@ -328,7 +328,7 @@ namespace Connect4
         /// <param name="player">Current player being checked</param>
         /// <param name="type">Type of win if won</param>
         /// <returns>If a win was detected</returns>
-        private bool DiagonalR(PlayerNum player, out WinType type)
+        private bool DiagonalR(Connect4Player.PlayerNum player, out WinType type)
         {
             for (int x = 0; x < _board.GetLength(1) - 3; x++)
             {

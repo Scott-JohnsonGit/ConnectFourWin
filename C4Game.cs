@@ -79,8 +79,8 @@ namespace Connect4
         public C4Game(SpecialRules rule, string User1, string User2, string? User3, string Path)
         {
             // Create and add first 2 required players to player list
-            Connect4Player Player1 = new Connect4Player(PlayerNum.One, User1, Path);
-            Connect4Player Player2 = new Connect4Player(PlayerNum.One, User2, Path);
+            Connect4Player Player1 = new Connect4Player(Connect4Player.PlayerNum.One, User1, Path);
+            Connect4Player Player2 = new Connect4Player(Connect4Player.PlayerNum.One, User2, Path);
             connect4Players.Add(Player1);
             connect4Players.Add(Player2);
             // Update rules
@@ -94,7 +94,7 @@ namespace Connect4
                     throw new Exception("User 3 is not defined");
                 }
                 // Creates and adds player
-                Connect4Player Player3 = new Connect4Player(PlayerNum.One, User3, Path);
+                Connect4Player Player3 = new Connect4Player(Connect4Player.PlayerNum.One, User3, Path);
                 connect4Players.Add(Player3);
             }
             // Creates the board
@@ -127,12 +127,12 @@ namespace Connect4
                 }
             }
             // Check if any player won game on turn
-            if (_gameBoard.CheckWin(out PlayerNum player, out WinType winType))
+            if (_gameBoard.CheckWin(out Connect4Player.PlayerNum player, out WinType winType))
             {
                 // If a player has won update database and return winning player
-                if (player != PlayerNum.None)
+                if (player != Connect4Player.PlayerNum.None)
                 {
-                    connect4Players[(int)player - 1].UpdateData(connect4Players[(int)player - 1].GameWins + 1);
+                    //connect4Players[(int)player - 1].UpdateData(connect4Players[(int)player - 1].GameWins + 1);
                     winner = connect4Players[(int)player - 1];
                 }
                 // Draws (board is full with no winner)
